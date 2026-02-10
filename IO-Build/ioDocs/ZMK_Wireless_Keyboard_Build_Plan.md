@@ -1,4 +1,4 @@
-# Building a Wireless 75% Low-Profile Keyboard with ZMK
+# Wireless 65-75% Low-Profile Keyboard with ZMK
 
 A complete reference for designing and building a custom Bluetooth keyboard from scratch — covering firmware, MCU selection, PCB design, switches, displays, trackpads, batteries, and cases.
 
@@ -6,7 +6,7 @@ A complete reference for designing and building a custom Bluetooth keyboard from
 
 ## 1. Architecture Overview
 
-Your keyboard is essentially a small embedded system. Here's how all the pieces relate:
+Essentially a small embedded system. Here's how all the pieces relate:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -48,7 +48,7 @@ Using a dev board means you don't need to design the radio, crystal, antenna mat
 
 ### Option B: Bare nRF52840 on Custom PCB (Advanced)
 
-Fully integrated single-PCB design, you'd use a **module** like the Holyiot 18010 or E73-2G4M08S1C rather than the raw IC. The raw nRF52840 requires a 4-layer PCB with microvias to route all pins, which is impractical for most builders. A module integrates the chip, crystal, and antenna into a solderable package.
+Fully integrated single-PCB design, Use a **module** like the Holyiot 18010 or E73-2G4M08S1C rather than the raw IC. The raw nRF52840 requires a 4-layer PCB with microvias to route all pins, which is impractical for most builders. A module integrates the chip, crystal, and antenna into a solderable package.
 
 ### Key nRF52840 Specs
 - Bluetooth 5.0, ARM Cortex-M4F @ 64 MHz
@@ -71,27 +71,7 @@ Fully integrated single-PCB design, you'd use a **module** like the Holyiot 1801
 - **Pros:** Largest ecosystem of keycaps (MBK, CFX, CS, wrk.), most open-source PCB designs, thinnest option
 - **Cons:** Non-standard spacing limits layout flexibility, fewer switch feel options than MX
 
-### Kailh Choc V2
-
-- **Spacing:** Standard MX spacing (19.05 mm)
-- **Travel:** ~3.0 mm total
-- **Pins:** 4-pin (cross stem, MX-compatible)
-- **Keycap stem:** MX-compatible cross
-- **Pros:** Works with many standard MX keycaps, MX spacing
-- **Cons:** Limited keycap compatibility in practice (short stem height), smaller ecosystem than Choc V1
-
-### Gateron KS-33 Low Profile 2.0
-
-- **Spacing:** MX spacing
-- **Travel:** 1.7 mm pre-travel, 3.2 mm total
-- **Pins:** 3-pin, unique pinout
-- **Keycap stem:** Proprietary (not MX, not Choc)
-- **Pros:** Smooth feel, factory pre-lubed, longer pre-travel reduces accidental presses
-- **Cons:** Very limited keycap availability (mostly NuPhy/Keychron), few open-source PCB designs, smallest ecosystem of the three
-
 ### Recommendation for a Custom Build
-
-**Kailh Choc V1** has the best ecosystem for custom builds: the most open-source PCBs, the most keycap options, community KiCad footprint libraries (marbastlib), and established hot-swap socket support. If you want MX-compatible keycaps, Choc V2 is viable but with a much smaller custom PCB ecosystem.
 
 ---
 
@@ -123,15 +103,7 @@ MBK is the most universally available and well-supported option.
 - **Firmware:** ZMK only
 - **Shows:** Battery %, connection status, active layer, lock states, custom widgets/animations
 
-### SSD1306 OLED (128×64 or 128×32)
-
-- **Power draw:** ~10,000+ µA (will significantly reduce battery life)
-- **Interface:** I2C (4 pins: VCC, GND, SDA, SCL)
-- **Price:** ~$3–5
-- **Firmware:** ZMK
-- **Drawback for wireless:** Massive power drain. On a 110 mAh battery, an always-on OLED will cut battery life from days to hours.
-
-### Recommendation
+Recommendation
 
 **nice!view** is the clear winner for a wireless build. The power savings are enormous — the display barely registers on the power budget. It's what the nice!nano was designed to pair with.
 
@@ -222,7 +194,7 @@ You need a **3.7V LiPo** (lithium polymer) cell. Key sizing considerations:
 |-------------|-----------------|----------|----------|
 | **301230** | 3 × 12 × 30 | ~110 mAh | Fits under socketed nice!nano. Minimal builds. |
 | **401230** | 4 × 12 × 30 | ~130 mAh | Slightly thicker, more capacity |
-| **502530** | 5 × 25 × 30 | ~300 mAh | Good balance for 75% build |
+| **502530** | 5 × 25 × 30 | ~300 mAh | Good balance for 75% build | <----
 | **503450** | 5 × 34 × 50 | ~800 mAh | Large, for extended battery life |
 | **603450** | 6 × 34 × 50 | ~1000 mAh | Maximum capacity if space allows |
 
@@ -269,12 +241,7 @@ If you're using a nice!nano or SuperMini, the charging circuit is built in. For 
 
 ## 8. PCB Design
 
-### Two Approaches
-
-**Approach A: Dev Board + Handwire / Simple PCB**
-Use a nice!nano/SuperMini on a carrier PCB. The PCB just provides the key matrix, hot-swap sockets, and connectors. This is the easiest path.
-
-**Approach B: Fully Integrated Custom PCB**
+**Fully Integrated Custom PCB**
 Design a PCB with an nRF52840 module (e.g., Holyiot 18010), USB-C connector, charging circuit, and everything integrated. This is what commercial wireless keyboards do. Requires solid electronics knowledge.
 
 ### PCB Design Tools
